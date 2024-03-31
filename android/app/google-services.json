@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "408916913896",
+    "project_id": "locationbasedinformationshare",
+    "storage_bucket": "locationbasedinformationshare.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408916913896:android:d1d1e10ff38438023de35d",
+        "android_client_info": {
+          "package_name": "com.example.location_sharing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9sncMWjOXeOfBP3ZZ01hewTzraQLF50M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:408916913896:android:1c2d54a54349f41c3de35d",
+        "android_client_info": {
+          "package_name": "com.example.location_social_media"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9sncMWjOXeOfBP3ZZ01hewTzraQLF50M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
