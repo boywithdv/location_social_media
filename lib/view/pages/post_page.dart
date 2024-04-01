@@ -7,7 +7,7 @@ import 'package:location_social_media/view/components/comment.dart';
 import 'package:location_social_media/view/components/comment_button.dart';
 import 'package:location_social_media/view/components/delete_button.dart';
 import 'package:location_social_media/view/components/like_button.dart';
-import 'package:location_social_media/view/pages/home_page.dart';
+import 'package:location_social_media/view/pages/time_line.dart';
 import 'package:location_social_media/view/pages/user_profile_page.dart';
 
 class PostPage extends StatefulWidget {
@@ -58,8 +58,8 @@ class _PostPageState extends State<PostPage> {
     });
   }
 
-// backToHomePageメソッドを追加
-  void backToHomePage() {
+// backToTimeLineメソッドを追加
+  void backToTimeLine() {
     // 戻る際にNavigator.pop()の引数として更新されたデータを渡す
     Navigator.pop(context, true);
   }
@@ -191,7 +191,7 @@ class _PostPageState extends State<PostPage> {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) =>
-                      HomePage(),
+                      TimeLine(),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     var begin = Offset(-1.0, 0.0);
@@ -252,7 +252,7 @@ class _PostPageState extends State<PostPage> {
           AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: backToHomePage,
+          onPressed: backToTimeLine,
         ),
         title: const Text("ポスト"),
       ),

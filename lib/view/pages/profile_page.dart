@@ -203,20 +203,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  void backToHomePage() {
-    // 戻る際にNavigator.pop()の引数として更新されたデータを渡す
-    Navigator.pop(context, true);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: backToHomePage,
-        ),
         title: const Text(
           'ProfilePage',
         ),

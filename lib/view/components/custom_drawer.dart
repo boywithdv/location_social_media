@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:location_social_media/view/components/custom_list_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
-  final void Function()? onProfileTap;
   final void Function()? onSignOut;
-  const CustomDrawer(
-      {super.key, required this.onProfileTap, required this.onSignOut});
+  const CustomDrawer({super.key, required this.onSignOut});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +28,6 @@ class CustomDrawer extends StatelessWidget {
                 text: 'H O M E',
                 onTap: () => Navigator.pop(context),
               ),
-              //profile list tile
-              CustomListTile(
-                  icon: Icons.person,
-                  text: 'P R O F I L E',
-                  onTap: onProfileTap),
             ],
           ),
           //logout listtile

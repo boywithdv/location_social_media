@@ -228,7 +228,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
   }
 
-  void backToHomePage() {
+  void backToTimeLine() {
     // 戻る際にNavigator.pop()の引数として更新されたデータを渡す
     Navigator.pop(context, true);
   }
@@ -240,7 +240,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: backToHomePage,
+          onPressed: backToTimeLine,
         ),
         title: Text(
           widget.user,

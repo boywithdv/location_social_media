@@ -15,7 +15,7 @@ class AuthPage extends StatelessWidget {
         builder: (context, snapshot) {
           //user is logged in
           if (snapshot.hasData) {
-            //ここが本来はHomePageウィジェットを使用
+            //ここが本来はTimeLineウィジェットを使用
             return const HomePage();
           }
           // user is not login

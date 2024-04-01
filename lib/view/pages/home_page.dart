@@ -1,213 +1,103 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:location_social_media/view/pages/chat_message/all_message_user.dart';
+import 'package:location_social_media/models/model.dart';
 import 'package:flutter/material.dart';
-import 'package:location_social_media/helper/helper_methods.dart';
-import 'package:location_social_media/view/components/custom_drawer.dart';
-import 'package:location_social_media/view/components/post_form.dart';
-import 'package:location_social_media/view/components/wall_post.dart';
 import 'package:location_social_media/view/pages/profile_page.dart';
+import 'package:location_social_media/view/pages/time_line.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key});
-
+  const HomePage({super.key});
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => _HomePagePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  String postid = "";
-  List<WallPost> posts = [];
+class _HomePagePageState extends State<HomePage> {
+  late ScrollController _scrollController;
+  bool isScrolled = false;
+  final List<NavigationDestination> destinations = [
+    for (var item in navBtn)
+      NavigationDestination(
+        icon: item.navIcon,
+        label: item.navName,
+      )
+  ];
 
-  final currentUser = FirebaseAuth.instance.currentUser!;
-  //textController
-  final textController = TextEditingController();
   @override
   void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(_listenToScrollChange);
     super.initState();
-    getLoading(); // 初期表示時にデータを取得
   }
 
-  //sign user logout
-  void signOut() {
-    FirebaseAuth.instance.signOut();
-  }
-
-  void postMessage() async {
-    // textFieldに何かがある場合のみ投稿する
-    if (textController.text.isNotEmpty) {
-      // Firebaseに保存
-      String username = '';
-      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
-          .doc(currentUser.uid)
-          .get();
-      if (userSnapshot.exists) {
-        username = userSnapshot.get('username');
-      }
-
-      FirebaseFirestore.instance.collection('UserPosts').add(
-        {
-          'UserEmail': currentUser.email,
-          'UserId': currentUser.uid,
-          'Username': username,
-          'Message': textController.text,
-          'TimeStamp': Timestamp.now(),
-          'Likes': [],
-        },
-      );
-    }
-    // textfieldをクリアする
-    if (mounted) {
-      // mounted プロパティを確認する
+  _listenToScrollChange() {
+    if (_scrollController.offset >= 100.0) {
       setState(() {
-        textController.clear();
+        isScrolled = true;
+      });
+    } else {
+      setState(() {
+        isScrolled = false;
       });
     }
   }
 
-  //プロフィールページに遷移
-  void goToProfilePage() async {
-    //navigatorを戻す
-    Navigator.pop(context);
-    //プロフィルページ遷移
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ProfilePage(),
-      ),
-    );
-    await getLoading();
-  }
-
-  Future<void> getLoading() async {
-    // 新しい情報を取得する処理をここに追加する
-    // 例: データベースから最新の投稿内容を取得する
-
-    // データベースから最新の投稿内容を取得する場合の例
-    QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection('UserPosts')
-        .orderBy("TimeStamp", descending: true)
-        .get();
-    if (mounted) {
-      // 新しい情報を反映させるためにStateを更新する
-      setState(() {
-        // snapshotのデータを使ってUIを更新する
-        // ここでは新しい投稿内容をStateにセットしてUIを再構築する
-        // snapshotから投稿データを取得し、Stateにセットする
-        posts = snapshot.docs
-            .map((doc) => WallPost(
-                  key: Key(doc.id),
-                  message: doc['Message'],
-                  user: doc['UserEmail'],
-                  username: doc['Username'],
-                  postId: doc.id,
-                  likes: List<String>.from(doc['Likes'] ?? []),
-                  time: formatDate(doc['TimeStamp']),
-                  uid: doc['UserId'],
-                ))
-            .toList();
-      });
-    }
-  }
+  var index = 4;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        title: const Text(
-          "オープン",
-        ),
-        actions: [
-          IconButton(
-            onPressed: signOut,
-            icon: Icon(Icons.logout),
+      resizeToAvoidBottomInset: false,
+      extendBody: true,
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int idx) {
+          setState(() {
+            index = idx;
+          });
+        },
+        //画面下部にあるメニューのラベルを非表示する
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        indicatorColor: Color.fromARGB(255, 211, 219, 255),
+        selectedIndex: index,
+        animationDuration: const Duration(seconds: 1),
+        destinations: <Widget>[
+          NavigationDestination(
+            icon: destinations[0].icon,
+            label: destinations[0].label,
+            selectedIcon: const Icon(Icons.home_outlined),
           ),
+          NavigationDestination(
+            icon: destinations[1].icon,
+            label: destinations[1].label,
+            selectedIcon: Icon(Icons.chat_bubble_outline),
+          ),
+          NavigationDestination(
+            icon: destinations[2].icon,
+            label: destinations[2].label,
+            selectedIcon: Icon(Icons.location_on_outlined),
+          ),
+          NavigationDestination(
+            icon: destinations[3].icon,
+            label: destinations[3].label,
+            selectedIcon: Icon(Icons.search_outlined),
+          ),
+          NavigationDestination(
+            icon: destinations[4].icon,
+            label: destinations[4].label,
+            selectedIcon: Icon(Icons.person_outline_rounded),
+          )
         ],
       ),
-      drawer: CustomDrawer(
-        onProfileTap: goToProfilePage,
-        onSignOut: signOut,
-      ),
-      body: RefreshIndicator(
-        edgeOffset: 0,
-        color: Theme.of(context).colorScheme.primary,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        onRefresh: () async {
-          // RefreshIndicatorが引っ張られたときの処理を定義する
-          await getLoading();
-          // ここでは新しい投稿内容を取得するために、一度Stateをリセットしてから再度投稿内容を取得する
-        },
-        child: Center(
-          child: Column(
-            children: [
-              // 投稿
-              Expanded(
-                // Expandedウィジェットの構築
-                child: StreamBuilder(
-                  // StreamBuilderの構築
-                  stream: FirebaseFirestore.instance
-                      .collection('UserPosts')
-                      .orderBy("TimeStamp", descending: true)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ' + snapshot.error.toString());
-                    } else {
-                      posts.clear(); // リストをクリアして最新のデータを追加
-                      for (var doc in snapshot.data!.docs) {
-                        final post = WallPost(
-                          key: Key(doc.id),
-                          message: doc['Message'],
-                          user: doc['UserEmail'],
-                          username: doc['Username'],
-                          postId: doc.id,
-                          likes: List<String>.from(doc['Likes'] ?? []),
-                          time: formatDate(doc['TimeStamp']),
-                          uid: doc['UserId'],
-                        );
-                        posts.add(post); // リストに追加
-                      }
-                      return ListView.builder(
-                        // ListView.builderの構築
-                        itemCount: posts.length, // リストの要素数を指定
-                        itemBuilder: (context, index) {
-                          // 投稿データを使ってUIを構築する
-                          return posts[index];
-                        },
-                      );
-                    }
-                  },
-                ),
-              ),
-              // logged in as
-              Text(
-                "Logged in as: ${currentUser.email!}",
-                style: TextStyle(color: Colors.grey),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => PostForm(),
-          ),
-        ),
-        label: Icon(
-          Icons.add,
-          color: Theme.of(context).colorScheme.onSecondary,
-        ),
-      ),
+      body: <Widget>[
+        // カレンダー
+        const TimeLine(),
+        // チャット
+        AllMessageUser(),
+        // ロケーション
+        Center(child: Text(destinations[2].label)),
+        // ユーザ検索
+        Center(child: Text(destinations[3].label)),
+        // プロフィール
+        const ProfilePage()
+      ][index],
     );
   }
 }
