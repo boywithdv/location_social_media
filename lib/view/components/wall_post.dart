@@ -3,10 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-/*
-import 'package:location_social_media/helper/helper_methods.dart';
-import 'package:location_social_media/view/components/comment.dart';
-*/
 import 'package:location_social_media/view/components/comment_button.dart';
 import 'package:location_social_media/view/components/delete_button.dart';
 import 'package:location_social_media/view/components/like_button.dart';
