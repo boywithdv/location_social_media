@@ -139,7 +139,7 @@ class _TimeLineState extends State<TimeLine> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return CircularProgressIndicator();
                     } else if (snapshot.hasError) {
-                      return Text('Error: ' + snapshot.error.toString());
+                      return Text('Error: ${snapshot.error}');
                     } else {
                       posts.clear(); // リストをクリアして最新のデータを追加
                       for (var doc in snapshot.data!.docs) {
@@ -171,17 +171,20 @@ class _TimeLineState extends State<TimeLine> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => PostForm(),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 110),
+        child: FloatingActionButton.extended(
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (BuildContext context) => PostForm(),
+            ),
           ),
-        ),
-        label: Icon(
-          Icons.add,
-          color: Theme.of(context).colorScheme.onSecondary,
+          label: Icon(
+            Icons.add,
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
         ),
       ),
     );

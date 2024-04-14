@@ -40,7 +40,7 @@ class _HomePagePageState extends State<HomePage> {
     }
   }
 
-  var index = 4;
+  int _selectedIndex = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +50,13 @@ class _HomePagePageState extends State<HomePage> {
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int idx) {
           setState(() {
-            index = idx;
+            _selectedIndex = idx;
           });
         },
         //画面下部にあるメニューのラベルを非表示する
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         indicatorColor: Color.fromARGB(255, 211, 219, 255),
-        selectedIndex: index,
+        selectedIndex: _selectedIndex,
         animationDuration: const Duration(seconds: 1),
         destinations: <Widget>[
           NavigationDestination(
@@ -97,7 +97,7 @@ class _HomePagePageState extends State<HomePage> {
         Center(child: Text(destinations[3].label)),
         // プロフィール
         const ProfilePage()
-      ][index],
+      ][_selectedIndex],
     );
   }
 }
