@@ -206,106 +206,80 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        title: const Text(
-          'ProfilePage',
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: AppBar(
+          title: const Text(
+            'ProfilePage',
+          ),
         ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('Users')
-                  .doc(currentUser.uid)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  final userData =
-                      snapshot.data!.data() as Map<String, dynamic>;
-                  return ListView(
-                    children: [
-                      const SizedBox(
-                        height: 50,
-                      ),
-                      //profile pic
-                      const Icon(
-                        Icons.person,
-                        size: 72,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      //user email
-                      Text(
-                        currentUser.email!,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                      //user details
-                      Padding(
-                        padding: const EdgeInsets.only(left: 25.0),
-                        child: Text(
-                          "ユーザー情報",
-                          style: TextStyle(
-                            color: Colors.grey[600],
+        body: Column(
+          children: [
+            Expanded(
+              child: StreamBuilder<DocumentSnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('Users')
+                    .doc(currentUser.uid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final userData =
+                        snapshot.data!.data() as Map<String, dynamic>;
+                    return ListView(
+                      children: [
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        //profile pic
+                        const Icon(
+                          Icons.person,
+                          size: 72,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        //user email
+                        Text(
+                          currentUser.email!,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
+                        //user details
+                        Padding(
+                          padding: const EdgeInsets.only(left: 25.0),
+                          child: Text(
+                            "ユーザー情報",
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                            ),
                           ),
                         ),
-                      ),
-                      //username
-                      CustomTextBox(
-                        text: userData['username'],
-                        sectionName: 'ニックネーム',
-                        onPressed: () => editField('username'),
-                        email: currentUser.email,
-                      ),
-                      //bio
-                      CustomTextBox(
-                        text: userData['bio'],
-                        sectionName: '自己紹介',
-                        onPressed: () => editField('bio'),
-                        email: currentUser.email,
-                      ),
+                        //username
+                        CustomTextBox(
+                          text: userData['username'],
+                          sectionName: 'ニックネーム',
+                          onPressed: () => editField('username'),
+                          email: currentUser.email,
+                        ),
+                        //bio
+                        CustomTextBox(
+                          text: userData['bio'],
+                          sectionName: '自己紹介',
+                          onPressed: () => editField('bio'),
+                          email: currentUser.email,
+                        ),
 
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 30, top: 15, bottom: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: GestureDetector(
-                                child: Text(
-                                  "$followingCount フォロー", // ここにフォロワー数を表示
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
-                                  ),
-                                ),
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          FollowingListPage(
-                                              uid: currentUser.uid,
-                                              username: userData['username'],
-                                              email: currentUser.email!),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            Padding(
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 30, top: 15, bottom: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
                                 padding:
                                     const EdgeInsets.only(left: 10, right: 10),
                                 child: GestureDetector(
                                   child: Text(
-                                    "$followerCount フォロワー", // ここにフォロワー数を表示
+                                    "$followingCount フォロー", // ここにフォロワー数を表示
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: Theme.of(context)
@@ -318,94 +292,125 @@ class _ProfilePageState extends State<ProfilePage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            FollowersListPage(
+                                            FollowingListPage(
                                                 uid: currentUser.uid,
                                                 username: userData['username'],
                                                 email: currentUser.email!),
                                       ),
                                     );
                                   },
-                                )),
-                          ],
-                        ),
-                      ),
-                      //user posts
-                      Padding(
-                        padding: const EdgeInsets.only(left: 25.0),
-                        child: Text(
-                          "My Posts",
-                          style: TextStyle(
-                            color: Colors.grey[600],
+                                ),
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: GestureDetector(
+                                    child: Text(
+                                      "$followerCount フォロワー", // ここにフォロワー数を表示
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              FollowersListPage(
+                                                  uid: currentUser.uid,
+                                                  username:
+                                                      userData['username'],
+                                                  email: currentUser.email!),
+                                        ),
+                                      );
+                                    },
+                                  )),
+                            ],
                           ),
                         ),
-                      ),
-                      StreamBuilder(
-                        stream: FirebaseFirestore.instance
-                            .collection('UserPosts')
-                            .where('UserId', isEqualTo: currentUser.uid)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
-                                // メッセージ取得
-                                final post = snapshot.data!.docs[index];
-                                postid = post.id;
+                        //user posts
+                        Padding(
+                          padding: const EdgeInsets.only(left: 25.0),
+                          child: Text(
+                            "My Posts",
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ),
+                        StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('UserPosts')
+                              .where('UserId', isEqualTo: currentUser.uid)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: snapshot.data!.docs.length,
+                                itemBuilder: (context, index) {
+                                  // メッセージ取得
+                                  final post = snapshot.data!.docs[index];
+                                  postid = post.id;
 
-                                return WallPost(
-                                  key: Key(post.id),
-                                  message: post['Message'],
-                                  user: post['UserId'],
-                                  username: post['Username'],
-                                  postId: post.id,
-                                  likes: List<String>.from(post['Likes'] ?? []),
-                                  time: formatDate(post['TimeStamp']),
-                                  uid: post['UserId'],
-                                );
-                              },
+                                  return WallPost(
+                                    key: Key(post.id),
+                                    message: post['Message'],
+                                    user: post['UserId'],
+                                    username: post['Username'],
+                                    postId: post.id,
+                                    likes:
+                                        List<String>.from(post['Likes'] ?? []),
+                                    time: formatDate(post['TimeStamp']),
+                                    uid: post['UserId'],
+                                  );
+                                },
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child:
+                                    Text('Error: ' + snapshot.error.toString()),
+                              );
+                            }
+                            return const Center(
+                              child: CircularProgressIndicator(),
                             );
-                          } else if (snapshot.hasError) {
-                            return Center(
-                              child:
-                                  Text('Error: ' + snapshot.error.toString()),
-                            );
-                          }
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
-                      ),
-                    ],
+                          },
+                        ),
+                      ],
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error${snapshot.error}'),
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('Error${snapshot.error}'),
-                  );
-                }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+                },
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 110),
+          child: FloatingActionButton.extended(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (BuildContext context) => PostForm(),
+              ),
+            ),
+            label: Icon(
+              Icons.add,
+              color: Theme.of(context).colorScheme.onSecondary,
             ),
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => PostForm(),
-          ),
-        ),
-        label: Icon(
-          Icons.add,
-          color: Theme.of(context).colorScheme.onSecondary,
-        ),
-      ),
-    );
+        ));
   }
 }
