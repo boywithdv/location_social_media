@@ -85,11 +85,10 @@ class _ProfilePageState extends State<ProfilePage> {
           style: const TextStyle(color: Colors.white),
         ),
         content: TextField(
-          autofocus: true,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Enter new $field',
-            hintStyle: TextStyle(color: Colors.grey),
+            hintStyle: const TextStyle(color: Colors.grey),
           ),
           onChanged: (value) {
             newValue = value;
@@ -102,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.pop(context);
                 return;
               },
-              child: Text(
+              child:const Text(
                 'Cancel',
                 style: TextStyle(color: Colors.white),
               )),
