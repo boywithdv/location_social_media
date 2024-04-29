@@ -9,6 +9,7 @@ import 'package:location_social_media/view/components/wall_post.dart';
 import 'package:location_social_media/view/components/post_form.dart';
 import 'package:location_social_media/view/pages/followers_list_page.dart';
 import 'package:location_social_media/view/pages/following_list_page.dart';
+import 'package:location_social_media/view/pages/theme_selector_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -210,6 +211,11 @@ class _ProfilePageState extends State<ProfilePage> {
           title: const Text(
             'ProfilePage',
           ),
+          actions: [
+            IconButton(
+              onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=>const ThemeSelectorPage(),),);
+          }, icon: const Icon(Icons.settings))],
         ),
         body: Column(
           children: [

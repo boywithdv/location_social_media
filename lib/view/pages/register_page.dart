@@ -131,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const Text('Lets create an account for you'),
               Text(
                 errorTextController.text,
-                style: TextStyle(color: Colors.red),
+                style:const TextStyle(color: Colors.red),
               ),
               SizedBox(
                 height: height * 0.03,
@@ -174,7 +174,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 controller: confirmPasswordTextController,
                 hintText: "Confirm Password",
                 obscureText: true,
-                prefixIcon: Icon(Icons.password),
+                prefixIcon:const Icon(Icons.password),
               ),
               const SizedBox(
                 height: 10,
