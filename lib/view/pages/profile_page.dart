@@ -9,6 +9,7 @@ import 'package:location_social_media/view/components/wall_post.dart';
 import 'package:location_social_media/view/components/post_form.dart';
 import 'package:location_social_media/view/pages/followers_list_page.dart';
 import 'package:location_social_media/view/pages/following_list_page.dart';
+import 'package:location_social_media/view/pages/theme_selector_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -20,7 +21,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   bool isFollowing = false;
 
-  String postid = "";
+  String posted = "";
   List<WallPost> posts = []; //textController
   final textController = TextEditingController();
   // user
@@ -85,11 +86,10 @@ class _ProfilePageState extends State<ProfilePage> {
           style: const TextStyle(color: Colors.white),
         ),
         content: TextField(
-          autofocus: true,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
             hintText: 'Enter new $field',
-            hintStyle: TextStyle(color: Colors.grey),
+            hintStyle: const TextStyle(color: Colors.grey),
           ),
           onChanged: (value) {
             newValue = value;
@@ -102,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.pop(context);
                 return;
               },
-              child: Text(
+              child:const Text(
                 'Cancel',
                 style: TextStyle(color: Colors.white),
               )),
@@ -211,6 +211,11 @@ class _ProfilePageState extends State<ProfilePage> {
           title: const Text(
             'ProfilePage',
           ),
+          actions: [
+            IconButton(
+              onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)=>const ThemeSelectorPage(),),);
+          }, icon: const Icon(Icons.settings))],
         ),
         body: Column(
           children: [
@@ -355,7 +360,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 itemBuilder: (context, index) {
                                   // メッセージ取得
                                   final post = snapshot.data!.docs[index];
-                                  postid = post.id;
+                                  posted = post.id;
 
                                   return WallPost(
                                     key: Key(post.id),
