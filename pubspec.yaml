@@ -23,6 +23,7 @@ dependencies:
   flutter_chat_ui: ^1.6.9
   rive: ^0.11.14
   intl: ^0.18.1
+  go_router: ^14.0.2
 
 dev_dependencies:
   flutter_test:
