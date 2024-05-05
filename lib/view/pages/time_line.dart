@@ -7,14 +7,14 @@ import 'package:location_social_media/view/components/post_form.dart';
 import 'package:location_social_media/view/components/wall_post.dart';
 
 class TimeLine extends StatefulWidget {
-  const TimeLine({Key? key});
+  const TimeLine({super.key, Key? keys});
 
   @override
   State<TimeLine> createState() => _TimeLineState();
 }
 
 class _TimeLineState extends State<TimeLine> {
-  String postid = "";
+  String posted = "";
   List<WallPost> posts = [];
 
   final currentUser = FirebaseAuth.instance.currentUser!;
@@ -107,7 +107,7 @@ class _TimeLineState extends State<TimeLine> {
         actions: [
           IconButton(
             onPressed: signOut,
-            icon: Icon(Icons.logout),
+            icon:const Icon(Icons.logout),
           ),
         ],
       ),
@@ -137,9 +137,9 @@ class _TimeLineState extends State<TimeLine> {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
-                      return Text('Error: ' + snapshot.error.toString());
+                      return Text('Error: ${snapshot.error}');
                     } else {
                       posts.clear(); // リストをクリアして最新のデータを追加
                       for (var doc in snapshot.data!.docs) {
@@ -171,17 +171,20 @@ class _TimeLineState extends State<TimeLine> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            fullscreenDialog: true,
-            builder: (BuildContext context) => PostForm(),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 110),
+        child: FloatingActionButton.extended(
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (BuildContext context) => PostForm(),
+            ),
           ),
-        ),
-        label: Icon(
-          Icons.add,
-          color: Theme.of(context).colorScheme.onSecondary,
+          label: Icon(
+            Icons.add,
+            color: Theme.of(context).colorScheme.onSecondary,
+          ),
         ),
       ),
     );
