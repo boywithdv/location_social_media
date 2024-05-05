@@ -7,15 +7,15 @@ class FollowListTile extends StatefulWidget {
   final String followUserName;
   final String followUserEmail;
   final String followUid;
-  List<String> following;
+  final List<String> following;
 
-  FollowListTile({
-    Key? key,
+  const FollowListTile({
+    super.key,
     required this.followUserName,
     required this.following,
     required this.followUid,
     required this.followUserEmail,
-  }) : super(key: key);
+  });
 
   @override
   State<FollowListTile> createState() => _FollowListTileState();

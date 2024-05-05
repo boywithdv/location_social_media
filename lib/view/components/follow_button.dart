@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class FollowButton extends StatelessWidget {
   final bool isFollow;
-  void Function()? followButtonOnTap;
-  void Function()? onTap;
-  FollowButton(
+  final void Function()? followButtonOnTap;
+  final void Function()? onTap;
+  const FollowButton(
       {super.key,
       required this.isFollow,
       required this.onTap,

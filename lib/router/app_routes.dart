@@ -11,9 +11,9 @@ final rootNavigatorKey = GlobalKey<NavigatorState>();
 class SplashRouteData extends GoRouteData {
   const SplashRouteData();
   static const String path = '/';
+}
 
-  @override
-  Widget build(BuildContext context, GoRouterState state) {
-    return const SplashPage();
-  }
+@override
+Widget build(BuildContext context, GoRouterState state) {
+  return const SplashPage();
 }

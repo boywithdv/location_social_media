@@ -12,11 +12,11 @@ class Comment extends StatefulWidget {
   final String time;
   final String commentUserEmail;
   final void Function()? onTap;
-  List<String> likes;
+  final List<String> likes;
 
   final void Function()? resetCommentCounter;
 
-  Comment({
+  const Comment({
     super.key,
     required this.text,
     required this.user,
@@ -70,7 +70,6 @@ class _CommentState extends State<Comment> {
         'Likes': FieldValue.arrayUnion([currentUser.email])
       });
     } else {
-      //if the post is now unliked, remove the user's email from the 'Likes' field
       postRef.update({
         'Likes': FieldValue.arrayRemove([currentUser.email])
       });
