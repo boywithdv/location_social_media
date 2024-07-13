@@ -59,6 +59,12 @@ Future<void> fetchCommentCount() async {
         });
     }
 }
+@override
+void dispose() {
+    _commentTextController.dispose();
+    super.dispose();
+}
+
 
 
   // いいねを押下する
