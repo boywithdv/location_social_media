@@ -1,6 +1,3 @@
-// Copyright 2019 Aleksander Woźniak
-// SPDX-License-Identifier: Apache-2.0
-
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
@@ -9,6 +6,8 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../Utils/utils.dart';
 
 class TableMultiExample extends StatefulWidget {
+  const TableMultiExample({super.key});
+
   @override
   _TableMultiExampleState createState() => _TableMultiExampleState();
 }
