@@ -47,16 +47,25 @@ class _WallPostState extends State<WallPost> {
     fetchCommentCount();
   }
 
-  Future<void> fetchCommentCount() async {
+Future<void> fetchCommentCount() async {
     final querySnapshot = await FirebaseFirestore.instance
         .collection('UserPosts')
         .doc(widget.postId)
         .collection('Comments')
         .get();
-    setState(() {
-      commentCount = querySnapshot.size;
-    });
-  }
+    if (mounted) {
+        setState(() {
+            commentCount = querySnapshot.size;
+        });
+    }
+}
+@override
+void dispose() {
+    _commentTextController.dispose();
+    super.dispose();
+}
+
+
 
   // いいねを押下する
   void toggleLike() {
