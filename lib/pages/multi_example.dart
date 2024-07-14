@@ -1,33 +1,28 @@
-// Copyright 2019 Aleksander Woźniak
-// SPDX-License-Identifier: Apache-2.0
+import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../Utils/utils.dart';
+import '../Utils/utils.dart';
 
-class TableEventsExample extends StatefulWidget {
+class TableMultiExample extends StatefulWidget {
+  const TableMultiExample({super.key});
+
   @override
-  _TableEventsExampleState createState() => _TableEventsExampleState();
+  _TableMultiExampleState createState() => _TableMultiExampleState();
 }
 
-class _TableEventsExampleState extends State<TableEventsExample> {
-  late final ValueNotifier<List<Event>> _selectedEvents;
+class _TableMultiExampleState extends State<TableMultiExample> {
+  final ValueNotifier<List<Event>> _selectedEvents = ValueNotifier([]);
+
+  // Using a `LinkedHashSet` is recommended due to equality comparison override
+  final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
+    equals: isSameDay,
+    hashCode: getHashCode,
+  );
+
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
-      .toggledOff; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
-  DateTime? _selectedDay;
-  DateTime? _rangeStart;
-  DateTime? _rangeEnd;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
-  }
 
   @override
   void dispose() {
@@ -40,53 +35,33 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     return kEvents[day] ?? [];
   }
 
-  List<Event> _getEventsForRange(DateTime start, DateTime end) {
+  List<Event> _getEventsForDays(Set<DateTime> days) {
     // Implementation example
-    final days = daysInRange(start, end);
-
+    // Note that days are in selection order (same applies to events)
     return [
       for (final d in days) ..._getEventsForDay(d),
     ];
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    if (!isSameDay(_selectedDay, selectedDay)) {
-      setState(() {
-        _selectedDay = selectedDay;
-        _focusedDay = focusedDay;
-        _rangeStart = null; // Important to clean those
-        _rangeEnd = null;
-        _rangeSelectionMode = RangeSelectionMode.toggledOff;
-      });
-
-      _selectedEvents.value = _getEventsForDay(selectedDay);
-    }
-  }
-
-  void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
     setState(() {
-      _selectedDay = null;
       _focusedDay = focusedDay;
-      _rangeStart = start;
-      _rangeEnd = end;
-      _rangeSelectionMode = RangeSelectionMode.toggledOn;
+      // Update values in a Set
+      if (_selectedDays.contains(selectedDay)) {
+        _selectedDays.remove(selectedDay);
+      } else {
+        _selectedDays.add(selectedDay);
+      }
     });
 
-    // `start` or `end` could be null
-    if (start != null && end != null) {
-      _selectedEvents.value = _getEventsForRange(start, end);
-    } else if (start != null) {
-      _selectedEvents.value = _getEventsForDay(start);
-    } else if (end != null) {
-      _selectedEvents.value = _getEventsForDay(end);
-    }
+    _selectedEvents.value = _getEventsForDays(_selectedDays);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TableCalendar - Events'),
+        title: Text('TableCalendar - Multi'),
       ),
       body: Column(
         children: [
@@ -94,19 +69,14 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             firstDay: kFirstDay,
             lastDay: kLastDay,
             focusedDay: _focusedDay,
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            rangeStartDay: _rangeStart,
-            rangeEndDay: _rangeEnd,
             calendarFormat: _calendarFormat,
-            rangeSelectionMode: _rangeSelectionMode,
             eventLoader: _getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.monday,
-            calendarStyle: CalendarStyle(
-              // Use `CalendarStyle` to customize the UI
-              outsideDaysVisible: false,
-            ),
+            selectedDayPredicate: (day) {
+              // Use values from Set to mark multiple days as selected
+              return _selectedDays.contains(day);
+            },
             onDaySelected: _onDaySelected,
-            onRangeSelected: _onRangeSelected,
             onFormatChanged: (format) {
               if (_calendarFormat != format) {
                 setState(() {
@@ -116,6 +86,15 @@ class _TableEventsExampleState extends State<TableEventsExample> {
             },
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
+            },
+          ),
+          ElevatedButton(
+            child: Text('Clear selection'),
+            onPressed: () {
+              setState(() {
+                _selectedDays.clear();
+                _selectedEvents.value = [];
+              });
             },
           ),
           const SizedBox(height: 8.0),

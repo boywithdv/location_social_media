@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:location_social_media/controller/follower_counter.dart';
 import 'package:location_social_media/controller/following_counter.dart';
 import 'package:location_social_media/helper/helper_methods.dart';
-import 'package:location_social_media/view/components/text_box.dart';
-import 'package:location_social_media/view/components/wall_post.dart';
-import 'package:location_social_media/view/components/post_form.dart';
-import 'package:location_social_media/view/pages/followers_list_page.dart';
-import 'package:location_social_media/view/pages/following_list_page.dart';
-import 'package:location_social_media/view/pages/theme_selector_page.dart';
+import 'package:location_social_media/widget/text_box.dart';
+import 'package:location_social_media/widget/wall_post.dart';
+import 'package:location_social_media/widget/post_form.dart';
+import 'package:location_social_media/pages/followers_list_page.dart';
+import 'package:location_social_media/pages/following_list_page.dart';
+import 'package:location_social_media/pages/theme_selector_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

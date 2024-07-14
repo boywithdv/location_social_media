@@ -3,14 +3,14 @@ import 'package:flutter/widgets.dart';
 import 'package:location_social_media/controller/follower_counter.dart';
 import 'package:location_social_media/controller/following_counter.dart';
 import 'package:location_social_media/helper/helper_methods.dart';
-import 'package:location_social_media/view/components/follow_button.dart';
-import 'package:location_social_media/view/components/text_box.dart';
-import 'package:location_social_media/view/components/user_chat_button.dart';
-import 'package:location_social_media/view/components/wall_post.dart';
-import 'package:location_social_media/view/components/post_form.dart';
+import 'package:location_social_media/widget/follow_button.dart';
+import 'package:location_social_media/widget/text_box.dart';
+import 'package:location_social_media/widget/user_chat_button.dart';
+import 'package:location_social_media/widget/wall_post.dart';
+import 'package:location_social_media/widget/post_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:location_social_media/view/pages/chat_page.dart';
+import 'package:location_social_media/pages/chat_page.dart';
 
 class UserProfilePage extends StatefulWidget {
   final String message;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:location_social_media/view/components/custom_list_tile.dart';
+import 'package:location_social_media/widget/custom_list_tile.dart';
 
 class CustomDrawer extends StatelessWidget {
   final void Function()? onSignOut;

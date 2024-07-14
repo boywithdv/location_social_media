@@ -1,23 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:location_social_media/view/components/follow_list_tile.dart';
+import 'package:location_social_media/widget/follow_list_tile.dart';
 
-class FollowersListPage extends StatefulWidget {
+class FollowingListPage extends StatefulWidget {
   final String uid;
   final String username;
   final String email;
-  const FollowersListPage(
+  const FollowingListPage(
       {Key? key,
       required this.uid,
       required this.username,
       required this.email});
 
   @override
-  State<FollowersListPage> createState() => _FollowersListPageState();
+  State<FollowingListPage> createState() => _FollowingListPageState();
 }
 
-class _FollowersListPageState extends State<FollowersListPage> {
+class _FollowingListPageState extends State<FollowingListPage> {
   final currentUser = FirebaseAuth.instance.currentUser;
   List<FollowListTile> users = [];
 
@@ -32,7 +32,7 @@ class _FollowersListPageState extends State<FollowersListPage> {
         .collection('Users')
         .doc(currentUser!.uid)
         .get();
-    List<dynamic> following = currentUserDoc['Followers'];
+    List<dynamic> following = currentUserDoc['Following'];
 
     List<FollowListTile> followingUsers = [];
     for (String userEmail in following) {
@@ -44,7 +44,7 @@ class _FollowersListPageState extends State<FollowersListPage> {
         var userDoc = userDocSnapshot.docs.first;
         var userTile = FollowListTile(
           key: Key(userDoc.id),
-          following: List<String>.from(currentUserDoc['Followers']),
+          following: List<String>.from(currentUserDoc['Following']),
           followUserName: userDoc['username'],
           followUid: userDoc['uid'],
           followUserEmail: userDoc['email'],

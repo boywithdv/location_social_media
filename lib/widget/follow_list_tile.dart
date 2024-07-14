@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:location_social_media/view/components/follow_button.dart';
+import 'package:location_social_media/widget/follow_button.dart';
 
 class FollowListTile extends StatefulWidget {
   final String followUserName;

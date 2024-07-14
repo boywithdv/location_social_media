@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:location_social_media/helper/helper_methods.dart';
-import 'package:location_social_media/view/components/custom_drawer.dart';
-import 'package:location_social_media/view/components/post_form.dart';
-import 'package:location_social_media/view/components/wall_post.dart';
+import 'package:location_social_media/widget/custom_drawer.dart';
+import 'package:location_social_media/widget/post_form.dart';
+import 'package:location_social_media/widget/wall_post.dart';
 
 class TimeLine extends StatefulWidget {
   const TimeLine({super.key, Key? keys});
