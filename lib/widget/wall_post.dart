@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:location_social_media/view/components/comment_button.dart';
-import 'package:location_social_media/view/components/delete_button.dart';
-import 'package:location_social_media/view/components/like_button.dart';
-import 'package:location_social_media/view/pages/post_page.dart';
-import 'package:location_social_media/view/pages/user_profile_page.dart';
+import 'package:location_social_media/widget/comment_button.dart';
+import 'package:location_social_media/widget/delete_button.dart';
+import 'package:location_social_media/widget/like_button.dart';
+import 'package:location_social_media/pages/post_page.dart';
+import 'package:location_social_media/pages/user_profile_page.dart';
 
 class WallPost extends StatefulWidget {
   final String uid;

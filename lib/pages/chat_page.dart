@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:location_social_media/controller/chat_service.dart';
 import 'package:location_social_media/helper/helper_methods.dart';
-import 'package:location_social_media/view/components/chat_text_field.dart';
-import 'package:location_social_media/view/components/message_tile.dart';
+import 'package:location_social_media/widget/chat_text_field.dart';
+import 'package:location_social_media/widget/message_tile.dart';
 
 class ChatPage extends StatefulWidget {
   final String uid;

@@ -1,8 +1,8 @@
-import 'package:location_social_media/view/pages/chat_message/all_message_user.dart';
+import 'package:location_social_media/pages/chat_message/all_message_user.dart';
 import 'package:location_social_media/models/model.dart';
 import 'package:flutter/material.dart';
-import 'package:location_social_media/view/pages/profile_page.dart';
-import 'package:location_social_media/view/pages/time_line.dart';
+import 'package:location_social_media/pages/profile_page.dart';
+import 'package:location_social_media/pages/time_line.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
