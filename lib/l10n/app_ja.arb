@@ -1,0 +1,10 @@
+{
+    "@@locale": "ja",
+    "authErrorCanceled": "キャンセルされました。",
+    "authErrorInvalidPhoneNumber": "無効な電話番号です。",
+    "authErrorCredentialAlreadyInUse": "この認証情報はすでに使用されています。",
+    "authErrorRequiresSignIn": "再サインインが必要です。",
+    "authErrorRequiresRecentSignIn": "再サインインが必要です。",
+    "authErrorFailedNetworkRequest": "ネットワークエラーが発生しました。",
+    "authErrorUndefined": "予期せぬエラーが発生しました。"
+}

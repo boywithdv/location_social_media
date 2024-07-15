@@ -1,0 +1,10 @@
+{
+    "@@locale": "en",
+    "authErrorCanceled": "Canceled.",
+    "authErrorInvalidPhoneNumber": "Invalid phone number.",
+    "authErrorCredentialAlreadyInUse": "This credential is already in use.",
+    "authErrorRequiresSignIn": "Sign-in required again.",
+    "authErrorRequiresRecentSignIn": "Sign-in required again.",
+    "authErrorFailedNetworkRequest": "A network error has occurred.",
+    "authErrorUndefined": "An unexpected error has occurred."
+}
