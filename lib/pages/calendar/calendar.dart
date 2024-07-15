@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../basics_example.dart';
-import '../complex_example.dart';
-import '../events_example.dart';
+import 'basics_example.dart';
+import 'complex_example.dart';
+import 'events_example.dart';
 import '../multi_example.dart';
 import '../range_example.dart';
 
