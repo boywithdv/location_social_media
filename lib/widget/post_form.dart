@@ -18,7 +18,7 @@ class _PostFormState extends State<PostForm> {
       // Firebaseに保存
       String username = '';
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
+          .collection('users')
           .doc(currentUser.uid)
           .get();
       if (userSnapshot.exists) {

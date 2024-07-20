@@ -39,7 +39,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   // user
   final currentUser = FirebaseAuth.instance.currentUser!;
   //all users
-  final usersCollection = FirebaseFirestore.instance.collection('Users');
+  final usersCollection = FirebaseFirestore.instance.collection('users');
   final usersCollectionUpdateName =
       FirebaseFirestore.instance.collection('UserPosts');
   int followerCount = 0;
@@ -96,13 +96,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   },
                 );
                 await FirebaseFirestore.instance
-                    .collection('Users')
+                    .collection('users')
                     .doc(widget.uid)
                     .update({'username': newValue});
                 updateCommentsWithNewUsername(newValue);
               } else if (field == 'bio') {
                 await FirebaseFirestore.instance
-                    .collection('Users')
+                    .collection('users')
                     .doc(widget.uid)
                     .update({'bio': newValue});
               }
@@ -128,7 +128,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   void checkFollowing() async {
     DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
         .instance
-        .collection('Users')
+        .collection('users')
         .doc(currentUser.uid)
         .get();
     var userData = snapshot.data();
@@ -199,7 +199,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       isFollowing = !isFollowing;
     });
     DocumentReference followRef =
-        FirebaseFirestore.instance.collection('Users').doc(currentUser.uid);
+        FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
     if (isFollowing) {
       followRef.update({
         'Following': FieldValue.arrayUnion([widget.email])
@@ -210,7 +210,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       });
     }
     DocumentReference followerRef =
-        FirebaseFirestore.instance.collection('Users').doc(widget.uid);
+        FirebaseFirestore.instance.collection('users').doc(widget.uid);
     if (isFollowing) {
       followerRef.update({
         'Followers': FieldValue.arrayUnion([currentUser.email])
@@ -251,7 +251,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
           Expanded(
             child: StreamBuilder<DocumentSnapshot>(
               stream: FirebaseFirestore.instance
-                  .collection('Users')
+                  .collection('users')
                   .doc(widget.uid)
                   .snapshots(),
               builder: (context, snapshot) {

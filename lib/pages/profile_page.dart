@@ -27,7 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
   // user
   final currentUser = FirebaseAuth.instance.currentUser!;
   //all users
-  final usersCollection = FirebaseFirestore.instance.collection('Users');
+  final usersCollection = FirebaseFirestore.instance.collection('users');
   final usersCollectionUpdateName =
       FirebaseFirestore.instance.collection('UserPosts');
   int followerCount = 0;
@@ -126,13 +126,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                 );
                 await FirebaseFirestore.instance
-                    .collection('Users')
+                    .collection('users')
                     .doc(currentUser.uid)
                     .update({'username': newValue});
                 updateCommentsWithNewUsername(newValue);
               } else if (field == 'bio') {
                 await FirebaseFirestore.instance
-                    .collection('Users')
+                    .collection('users')
                     .doc(currentUser.uid)
                     .update({'bio': newValue});
               }
@@ -222,7 +222,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Expanded(
               child: StreamBuilder<DocumentSnapshot>(
                 stream: FirebaseFirestore.instance
-                    .collection('Users')
+                    .collection('users')
                     .doc(currentUser.uid)
                     .snapshots(),
                 builder: (context, snapshot) {

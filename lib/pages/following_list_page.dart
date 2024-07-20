@@ -29,7 +29,7 @@ class _FollowingListPageState extends State<FollowingListPage> {
 
   Future<void> fetchFollowingUsers() async {
     var currentUserDoc = await FirebaseFirestore.instance
-        .collection('Users')
+        .collection('users')
         .doc(currentUser!.uid)
         .get();
     List<dynamic> following = currentUserDoc['Following'];
@@ -37,7 +37,7 @@ class _FollowingListPageState extends State<FollowingListPage> {
     List<FollowListTile> followingUsers = [];
     for (String userEmail in following) {
       var userDocSnapshot = await FirebaseFirestore.instance
-          .collection('Users')
+          .collection('users')
           .where('email', isEqualTo: userEmail)
           .get();
       if (userDocSnapshot.docs.isNotEmpty) {

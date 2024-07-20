@@ -7,7 +7,7 @@ class FollowingCounter {
       // ユーザーのドキュメントを取得
       DocumentSnapshot<Map<String, dynamic>> userSnapshot =
           await FirebaseFirestore.instance
-              .collection('Users')
+              .collection('users')
               .doc(userId)
               .get();
 

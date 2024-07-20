@@ -92,7 +92,7 @@ void dispose() {
   void addComment(String commentText) async {
     //get the user's email address
     final userDataSnapshot = await FirebaseFirestore.instance
-        .collection('Users')
+        .collection('users')
         .doc(currentUser.uid)
         .get();
 

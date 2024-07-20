@@ -36,7 +36,7 @@ class _FollowListTileState extends State<FollowListTile> {
       isFollow = !isFollow;
     });
     DocumentReference followRef =
-        FirebaseFirestore.instance.collection('Users').doc(currentUser.uid);
+        FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
     if (isFollow) {
       followRef.update({
         'Following': FieldValue.arrayUnion([widget.followUserEmail])
@@ -47,7 +47,7 @@ class _FollowListTileState extends State<FollowListTile> {
       });
     }
     DocumentReference followerRef =
-        FirebaseFirestore.instance.collection('Users').doc(widget.followUid);
+        FirebaseFirestore.instance.collection('users').doc(widget.followUid);
     if (isFollow) {
       followerRef.update({
         'Followers': FieldValue.arrayUnion([currentUser.email])
@@ -85,7 +85,7 @@ class _FollowListTileState extends State<FollowListTile> {
               ),
               StreamBuilder(
                 stream: FirebaseFirestore.instance
-                    .collection('Users')
+                    .collection('users')
                     .doc(currentUser.uid)
                     .snapshots(),
                 builder: (context, snapshot) {
